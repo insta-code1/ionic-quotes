@@ -26,13 +26,17 @@ export class FavoritesPage {
     modal.present();
     modal.onDidDismiss((remove: boolean) => {
       if (remove) {
-        this.quoteService.removeQuoteFromFavorites(quote);
+         this.onRemoveFromFavorites(quote) ;                              
+      }
+    });
+  }
+
+  onRemoveFromFavorites(quote: Quote) {
+     this.quoteService.removeQuoteFromFavorites(quote);
         // this.quotes = this.quoteService.getFavoriteQuotes();           // touch DB and re render the favorite quotes again
         const position = this.quotes.findIndex((quoteEl: Quote) => {      
           return quoteEl.id == quote.id;
         });
-        this.quotes.splice(position, 1);                                  // don't touch DB but re render the favorite quotes again using splice
-      }
-    });
+        this.quotes.splice(position, 1);           // don't touch DB but re render the favorite quotes again using splice
   }
 }
