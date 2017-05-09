@@ -1,6 +1,7 @@
+import { SettingService } from './../../services/settings';
 import { QuotePage } from './../quote/quote';
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController, MenuController } from 'ionic-angular';
 
 import { QuotesService } from './../../services/quotes.service';
 import { Quote } from './../../data/quoteCollection.interface';
@@ -15,7 +16,8 @@ export class FavoritesPage {
 
   constructor(
     private quoteService: QuotesService,
-    private modalCtrl: ModalController) {}
+    private modalCtrl: ModalController,
+    private settingService: SettingService) {}
 
   ionViewWillEnter() {
     this.quotes = this.quoteService.getFavoriteQuotes();
@@ -38,5 +40,13 @@ export class FavoritesPage {
           return quoteEl.id == quote.id;
         });
         this.quotes.splice(position, 1);           // don't touch DB but re render the favorite quotes again using splice
+  }
+
+  getBackground() {
+    return this.settingService.isAltBackground() ? 'altQuoteBackground' : 'quoteBackGround';
+  }
+
+  isAltBackground(){
+    return this.settingService.isAltBackground();
   }
 }
